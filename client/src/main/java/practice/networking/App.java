@@ -49,19 +49,23 @@ public final class App {
         //read console and send to server
         Console cons = System.console();
         String clientInput = cons.readLine("> ");
+        //third stream
+        dos.writeUTF(clientInput);
+        dos.flush();
 
         while(!clientInput.equals("exit")){
 
-            // third stream
-            clientInput = cons.readLine("> ");
-            dos.writeUTF(clientInput);
-            dos.flush();
 
             try {
                 
                 // fouth stream
                 String output = dis.readUTF();
                 System.out.println(output);
+                //fifth stream
+                clientInput = cons.readLine("> ");
+                dos.writeUTF(clientInput);
+                dos.flush();
+                
             } catch (Exception e) {
                 break;
             }

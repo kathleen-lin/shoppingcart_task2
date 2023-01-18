@@ -45,9 +45,9 @@ public final class App {
         // check if userName shopping cart exist, if not exist, create file
         // first stream
         String userName = dis.readUTF();
-        System.out.println(userName);
+        //System.out.println(userName);
         String fileName = userName + ".cart";
-        System.out.println(fileName);
+        //System.out.println(fileName);
 
         File f = new File(pathName, fileName);
 
@@ -67,36 +67,67 @@ public final class App {
 
                 if (clientInput.equals("exit")){
                     // fouth stream
+                    //System.out.println("Client wants to exit");
                     dos.writeUTF("exit programme");
                     dos.flush();
                     stop = true;
                     break;
                 }
                 if (clientInput.equals("list")){
+                    //System.out.println("Client wants to list");
+
                     String list = cart.list();
                     // fouth stream
                     dos.writeUTF(list);
                     dos.flush();
 
                 }
-                /*
+                
+                 if (clientInput.startsWith("add")){
+                    //System.out.println("Client wants to add items");
+
+                    //get substring from index 5
+                    String addition = clientInput.substring(4);
+                    String added = cart.add(addition, f);
+                    
+                    for (int i = 0; i < cart.getItems().size(); i++){
+                        //System.out.println(cart.getItems().get(i));
+                    }
+                    
+                    dos.writeUTF(added);
+                    dos.flush();
+                }
+             
                 if (clientInput.startsWith("delete")){
                     // fouth stream
+                    //System.out.println("Client wants to delete items");
+
+
+                    String deleteIndex = clientInput.substring(6).trim();
+                    System.out.println(deleteIndex);
+                    String deleted = cart.delete(deleteIndex);
+                    dos.writeUTF(deleted);
+                    dos.flush();
+
 
                 }
+
+                
                 if (clientInput.equals("save")){
                     // fouth stream
+                    //System.out.println("Client wants to save");
 
-                }
-                if (clientInput.startsWith("add")){
-                    // fouth stream
-
-                }  */
-                else {
+                    if (!cart.getItems().isEmpty()){
+                        cart.save(f, userName);
+                    }
                     
-                    dos.writeUTF("hello, world");
+                    dos.writeUTF("saved cart contents saved to " + userName);
+                    dos.flush();
+
 
                 }
+
+                
             }
         } else {
             //load
@@ -114,38 +145,65 @@ public final class App {
 
                 if (clientInput.equals("exit")){
                     // fouth stream
+                    //System.out.println("Client wants to exit");
                     dos.writeUTF("exit programme");
                     dos.flush();
                     stop = true;
                     break;
                 }
                 if (clientInput.equals("list")){
+                    //System.out.println("Client wants to list");
+
                     String list = cart.list();
                     // fouth stream
                     dos.writeUTF(list);
                     dos.flush();
 
                 }
-                /*
+                
+                 if (clientInput.startsWith("add")){
+                    //System.out.println("Client wants to add items");
+
+                    //get substring from index 5
+                    String addition = clientInput.substring(4);
+                    String added = cart.add(addition, f);
+                    
+                    for (int i = 0; i < cart.getItems().size(); i++){
+                        //System.out.println(cart.getItems().get(i));
+                    }
+                    
+                    dos.writeUTF(added);
+                    dos.flush();
+                }
+                
                 if (clientInput.startsWith("delete")){
                     // fouth stream
+                    //System.out.println("Client wants to delete items");
+
+
+                    String deleteIndex = clientInput.substring(6).trim();
+                    //System.out.println("Deleted index is: " + deleteIndex);
+                    String deleted = cart.delete(deleteIndex);
+                    dos.writeUTF(deleted);
+                    dos.flush();
 
                 }
+
+                
                 if (clientInput.equals("save")){
                     // fouth stream
-
-                }
-                if (clientInput.startsWith("add")){
-                    // fouth stream
-
-                }  */
-                else {
+                    //System.out.println("Client wants to save");
+                    if (!cart.getItems().isEmpty()){
+                        cart.save(f, userName);
+                    }
                     
-                    dos.writeUTF("hello, world");
+                    dos.writeUTF("saved cart contents saved to " + userName);
+                    dos.flush();
 
                 }
+                 
+                
             }
-
         }
 
         
